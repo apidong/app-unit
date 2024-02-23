@@ -40,6 +40,7 @@ return new class extends Migration
                 $table->index($columnNames['team_foreign_key'], 'roles_team_foreign_key_index');
             }
             $table->string('name', 100);       // For MySQL 8.0 use string('name', 125);
+            $table->text('deskripsi')->nullable();
             $table->string('guard_name', 100); // For MySQL 8.0 use string('guard_name', 125);
             $table->timestamps();
             if ($teams || config('permission.testing')) {

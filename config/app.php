@@ -196,8 +196,7 @@ return [
         App\Providers\RouteServiceProvider::class,
         Spatie\Permission\PermissionServiceProvider::class,
         Akaunting\Version\Provider::class,
-
-
+        App\Providers\MenuServiceProvider::class,
     ],
 
     /*
