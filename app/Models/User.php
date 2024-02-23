@@ -20,9 +20,12 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
+        'nama',
         'email',
         'password',
+        'use_mobile',
+        'active',
+        'email_verified_at'
     ];
 
     /**
@@ -43,4 +46,21 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function adminlte_image()
+    {
+        $email = md5($this->email);
+
+        return "https://www.gravatar.com/avatar/{$email}?s=32&d=https://www.gravatar.com/avatar/00000000000000000000000000000000?s=32";
+    }
+
+    public function adminlte_profile_url()
+    {
+        return '';
+    }
+
+    public function adminlte_desc()
+    {
+        return '';
+    }
 }
