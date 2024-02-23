@@ -9,9 +9,11 @@
         "guzzlehttp/guzzle": "^7.2",
         "jeroennoten/laravel-adminlte": "^3.9",
         "laravel/framework": "^9.19",
+        "laravel/passport": "^11.10",
         "laravel/sanctum": "^3.0",
         "laravel/tinker": "^2.7",
-        "laravel/ui": "^4.4"
+        "laravel/ui": "^4.4",
+        "spatie/laravel-permission": "^6.3"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9.1",
@@ -27,7 +29,10 @@
             "App\\": "app/",
             "Database\\Factories\\": "database/factories/",
             "Database\\Seeders\\": "database/seeders/"
-        }
+        },
+        "files": [
+            "app/helpers/helpers.php"
+        ]
     },
     "autoload-dev": {
         "psr-4": {
