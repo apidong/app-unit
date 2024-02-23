@@ -1,9 +1,9 @@
 <?php
 
-use App\Http\Controllers\HomeController;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Web\Home\HomeController;
 use App\Http\Controllers\Web\Auth\LoginController;
+use App\Http\Controllers\Web\Pengaturan\UserController;
 use App\Http\Controllers\Web\Pengaturan\PengaturanAplikasiController;
 
 /*
@@ -17,7 +17,7 @@ use App\Http\Controllers\Web\Pengaturan\PengaturanAplikasiController;
 |
 */
 
- 
+
 Route::middleware('guest')->group(function () {
     Route::get('/', function () {
         return view('auth.login');
@@ -34,6 +34,8 @@ Route::middleware('auth')->group(function () {
     });
 
     Route::prefix('pengaturan')->group(function () {
-        Route::get('aplikasi', [PengaturanAplikasiController::class, 'index']);
+        Route::get('aplikasi', [PengaturanAplikasiController::class, 'index'])->name('pengaturanaplikasi');
+        Route::put('aplikasi', [PengaturanAplikasiController::class, 'update']);
+        Route::resource('pengguna', UserController::class);
     });
 });

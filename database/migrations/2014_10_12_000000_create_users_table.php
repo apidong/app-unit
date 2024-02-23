@@ -26,6 +26,7 @@ return new class extends Migration
             $table->boolean('use_mobile');
             $table->rememberToken();
             $table->timestamps();
+            $table->softDeletes();
         });
 
          // Insert default admin user
