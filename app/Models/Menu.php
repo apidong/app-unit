@@ -12,7 +12,7 @@ class Menu extends Model
     protected $table = 'menu';
 
     protected $casts = [
-        'avaible' => 'json',
+        'available' => 'json',
     ];
 
     protected $fillable = [
