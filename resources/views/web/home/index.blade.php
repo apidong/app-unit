@@ -31,18 +31,5 @@
         </div>
  
     </div>
-
-    
-
+@endsection
  
-
-@endsection
-
-
-@section('footer')
-    <strong>Hak cipta © <?= date('Y') ?> <a href="https://domain.co.id">App Unit</a>.</strong>
-    Seluruh hak cipta dilindungi.
-    <div class="float-right d-none d-sm-inline-block">
-        <b>Versi</b> v{{ version('short') }}
-    </div>
-@endsection

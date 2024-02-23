@@ -4,6 +4,7 @@ use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Web\Auth\LoginController;
+use App\Http\Controllers\Web\Pengaturan\PengaturanAplikasiController;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,5 +31,9 @@ Route::middleware('guest')->group(function () {
 Route::middleware('auth')->group(function () {
     Route::prefix('home')->group(function () {
         Route::get('/', [HomeController::class, 'index']);
+    });
+
+    Route::prefix('pengaturan')->group(function () {
+        Route::get('aplikasi', [PengaturanAplikasiController::class, 'index']);
     });
 });
