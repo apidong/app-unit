@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreProdukRequest extends FormRequest
@@ -13,7 +14,7 @@ class StoreProdukRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +25,13 @@ class StoreProdukRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'kategori' => ['required', Rule::exists('kategori', 'id')],
+            'nama' => 'required|string',
+            'deskripsi' => 'sometimes',
+            'sku' => 'sometimes',
+            'harga' => 'required|regex:/^[0-9,.]+$/',
+            'berat' => 'required|regex:/^[0-9,.]+$/',
+            'ukuran' => 'sometimes|array',
         ];
     }
 }

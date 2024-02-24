@@ -24,7 +24,7 @@
             <!-- /.card-header -->
             <div class="card-body">
                 <div class="table-responsive">
-                    <table id="table-user" class="table table-striped table-hover va-middle">
+                    <table id="table-user" class="table  table-striped table-hover va-middle">
                         <thead>
                             <tr>
                                 <th>#</th>
@@ -71,20 +71,26 @@
             },
             {
                 'searchable': false,
+                "orderable": false,
                 "data": function(data) {
                     return `<td class="text-right py-0 align-middle">
                                 <div class="btn-group btn-group-sm">
-                                    <a class="btn btn-primary btn-edit" href="{{ url('pengaturan/pengguna') }}/${data.id}/edit"><i class="fas fa-pencil-alt"></i></a>
-                                    <button data-href="{{ url('pengaturan/pengguna') }}/${data.id}" class="btn btn-danger" data-toggle="modal" data-target="#confirm-delete"><i class="fas fa-trash"></i></button>
+                                    <a class="btn btn-primary btn-edit" href="{{ url('master/produk') }}/${data.id}/edit"><i class="fas fa-pencil-alt"></i></a>
+                                    <button data-href="{{ url('master/produk') }}/${data.id}" class="btn btn-danger" data-toggle="modal" data-target="#confirm-delete"><i class="fas fa-trash"></i></button>
                                 </div>
                             </td>`
                 }
             },
             {
-                'data': 'username'
+                'data': 'nama'
             },
             {
-                'data': 'email'
+                'data': 'deskripsi'
+            },
+            {
+                'data': 'harga',
+                
+                
             },
             {
                 'data': 'created_at'

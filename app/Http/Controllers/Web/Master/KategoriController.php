@@ -4,6 +4,9 @@ namespace App\Http\Controllers\Web\Master;
 
 use App\Models\Kategori;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreKategoriRequest;
+use Exception;
 
 class KategoriController extends Controller
 {
@@ -12,9 +15,15 @@ class KategoriController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        if ($request->ajax()) {
+            return datatables(Kategori::query())
+                ->addIndexColumn()
+                ->make(true);
+        }
+
+        return view('web.master.kategori.index');
     }
 
     /**
@@ -24,7 +33,7 @@ class KategoriController extends Controller
      */
     public function create()
     {
-        //
+        return view('web.master.kategori.formCreateKategori');
     }
 
     /**
@@ -33,9 +42,16 @@ class KategoriController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreKategoriRequest $request)
     {
-        //
+        $data = $request->validated();
+
+        try {
+            Kategori::create($data);
+            return redirect()->route('kategori.index')->with('success', 'Data berhasil disimpan');
+        } catch (Exception $e) {
+            return redirect()->route('kategori.index')->with('error', 'Error : ' . $e->getMessage());
+        }
     }
 
     /**
@@ -57,7 +73,7 @@ class KategoriController extends Controller
      */
     public function edit(Kategori $kategori)
     {
-        //
+        return view('web.master.kategori.formUpdateKategori', compact('kategori'));
     }
 
     /**
@@ -67,9 +83,12 @@ class KategoriController extends Controller
      * @param  \App\Models\Kategori  $kategori
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Kategori $kategori)
+    public function update(StoreKategoriRequest $request, Kategori $kategori)
     {
-        //
+        $data = $request->validated();
+        $kategori->update($data);
+
+        return redirect()->route('kategori.index')->with('success', 'Data berhasil disimpan');
     }
 
     /**

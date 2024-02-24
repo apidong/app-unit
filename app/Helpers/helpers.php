@@ -1,6 +1,6 @@
 <?php
 
-if (! function_exists('unformat_rupiah')) {
+if (!function_exists('unformat_rupiah')) {
     /**
      * rubah format nomor rupiah agar bisa terbaca oleh sistem.
      *
@@ -8,13 +8,16 @@ if (! function_exists('unformat_rupiah')) {
      */
     function unformat_rupiah($harga)
     {
+        if ($harga == null) {
+            return null;
+        }
         $harga_clean = preg_replace('/([^0-9\\,])/i', '', $harga);
 
         return str_replace(',', '.', $harga_clean);
     }
 }
 
-if (! function_exists('format_rupiah')) {
+if (!function_exists('format_rupiah')) {
     /**
      * rubah format nomor rupiah agar bisa terbaca oleh sistem.
      *
@@ -26,7 +29,7 @@ if (! function_exists('format_rupiah')) {
     }
 }
 
-if (! function_exists('rupiah')) {
+if (!function_exists('rupiah')) {
     /**
      * rubah format nomor rupiah agar bisa terbaca oleh sistem.
      *
@@ -38,7 +41,7 @@ if (! function_exists('rupiah')) {
     }
 }
 
-if (! function_exists('generateRandomHexColor')) {
+if (!function_exists('generateRandomHexColor')) {
     /**
      * generato hex color.
      *
@@ -58,7 +61,7 @@ if (! function_exists('generateRandomHexColor')) {
     }
 }
 
-if (! function_exists('aturMenu')) {
+if (!function_exists('aturMenu')) {
     function aturMenu($array)
     {
         $user = auth()->user();
@@ -66,7 +69,7 @@ if (! function_exists('aturMenu')) {
 
         return array_map(function ($value) use ($permisions) {
             if (is_array($value)) {
-                if (isset($value['permision']) && ! $permisions->contains($value['permision'])) {
+                if (isset($value['permision']) && !$permisions->contains($value['permision'])) {
                     return null;
                 }
                 unset($value['id']);
@@ -90,7 +93,7 @@ if (! function_exists('aturMenu')) {
     }
 }
 
-if (! function_exists('format_domain')) {
+if (!function_exists('format_domain')) {
     function format_domain($domain)
     {
         $domain = str_replace(['https://', 'http://'], '', $domain);
@@ -100,7 +103,7 @@ if (! function_exists('format_domain')) {
     }
 }
 
-if (! function_exists('format_api_domain')) {
+if (!function_exists('format_api_domain')) {
     function format_api_domain($domain)
     {
         $domain = str_replace(['https://', 'http://'], '', $domain);
@@ -110,20 +113,20 @@ if (! function_exists('format_api_domain')) {
     }
 }
 
-if (! function_exists('get_nama_file')) {
+if (!function_exists('get_nama_file')) {
     function get_nama_file($url, $default = '')
     {
         $nama_file = $default;
         $path_parts = pathinfo($url);
         if (count($path_parts) > 3) {
-            $nama_file = $path_parts['filename'].'.'.$path_parts['extension'];
+            $nama_file = $path_parts['filename'] . '.' . $path_parts['extension'];
         }
 
         return $nama_file;
     }
 }
 
-if (! function_exists('get_name_permision')) {
+if (!function_exists('get_name_permision')) {
     function get_name_permision($string, $searchValues = ['read-', 'create-', 'update-', 'delete-'])
     {
         return str_replace($searchValues, '', $string);

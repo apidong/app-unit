@@ -256,8 +256,8 @@ return [
     'dashboard_url' => 'home',
     'logout_url' => 'logout',
     'login_url' => 'login',
-    'register_url' => 'register',
-    'password_reset_url' => 'password/reset',
+    'register_url' => false,
+    'password_reset_url' => false,
     'password_email_url' => 'password/email',
     'profile_url' => false,
 
@@ -372,6 +372,12 @@ return [
                     'asset' => false,
                     'location' => '//cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.css',
                 ],
+                [
+                    'type' => 'css',
+                    'asset' => false,
+                    'location' => '//cdn.jsdelivr.net/npm/@ttskch/select2-bootstrap4-theme@x.x.x/dist/select2-bootstrap4.min.css',
+                ],
+                
             ],
         ],
         'Chartjs' => [
@@ -406,6 +412,56 @@ return [
                     'type' => 'js',
                     'asset' => false,
                     'location' => '//cdnjs.cloudflare.com/ajax/libs/pace/1.0.2/pace.min.js',
+                ],
+            ],
+        ],
+
+        'Imask' => [
+            'active' => true,
+            'files' => [
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => '/assets/plugins/imask/imask.js',
+                ],
+            ],
+        ],
+
+        'moment' => [
+            'active' => true,
+            'files' => [
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => '/assets/plugins/moment/moment-with-locales.min.js',
+                ],
+            ],
+        ],
+
+        'moment' => [
+            'active' => true,
+            'files' => [
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => '/assets/plugins/numeraljs/numeral.min.js',
+                ],
+            ],
+        ],
+
+        // Pastikan ini selalu dibagian paling bawah
+        'custom' => [
+            'active' => true,
+            'files' => [
+                [
+                    'type' => 'css',
+                    'asset' => true,
+                    'location' => '/assets/custom/css/admin.css',
+                ],
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => '/assets/custom/js/admin.js',
                 ],
             ],
         ],

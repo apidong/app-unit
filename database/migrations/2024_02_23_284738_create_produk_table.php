@@ -24,6 +24,7 @@ return new class extends Migration
             $table->decimal('berat', 20, 0);
             $table->json('ukuran');
             $table->timestamps();
+            $table->softDeletes();
 
             // index
             $table->index('nama');

@@ -19,4 +19,8 @@ class Kategori extends Model
     function produk() {
         
     }
+
+    protected $casts = [
+        'created_at' => 'datetime:Y-m-d', 
+    ];
 }

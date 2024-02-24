@@ -6,6 +6,8 @@ use App\Models\Produk;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreProdukRequest;
 use App\Http\Requests\UpdateProdukRequest;
+use App\Models\Kategori;
+use Exception;
 use Illuminate\Http\Request;
 
 class ProdukController extends Controller
@@ -20,6 +22,10 @@ class ProdukController extends Controller
         if ($request->ajax()) {
             return datatables(Produk::query())
                 ->addIndexColumn()
+                ->addColumn('harga', function ($data) {
+                    // Process data for the custom column before sending it
+                    return 'Rp ' . rupiah($data->harga);
+                })
                 ->make(true);
         }
 
@@ -33,7 +39,8 @@ class ProdukController extends Controller
      */
     public function create()
     {
-        //
+        $kategori = Kategori::all();
+        return view('web.master.produk.formCreateProduk', compact('kategori'));
     }
 
     /**
@@ -44,7 +51,23 @@ class ProdukController extends Controller
      */
     public function store(StoreProdukRequest $request)
     {
-        //
+        $data = $request->validated();
+
+        try {
+            $produk = [
+                'nama' => $data['nama'],
+                'sku' => $data['sku'],
+                'deskripsi' => $data['deskripsi'],
+                'id_kategori' => $data['kategori'],
+                'harga' => unformat_rupiah($data['harga'] ?? 0),
+                'berat' => unformat_rupiah($data['berat'] ?? 0),
+                'ukuran' => collect($data['ukuran'])->map(fn ($ukuran)  =>  unformat_rupiah($ukuran)),
+            ];
+            Produk::create($produk);
+            return redirect()->route('produk.index')->with('success', 'Data berhasil disimpan');
+        } catch (Exception $e) {
+            return redirect()->route('produk.index')->with('error', 'Error : ' . $e->getMessage());
+        }
     }
 
     /**
@@ -66,7 +89,8 @@ class ProdukController extends Controller
      */
     public function edit(Produk $produk)
     {
-        //
+        $kategori = Kategori::all();
+        return view('web.master.produk.formUpdateProduk', compact('kategori', 'produk'));
     }
 
     /**
@@ -78,7 +102,23 @@ class ProdukController extends Controller
      */
     public function update(UpdateProdukRequest $request, Produk $produk)
     {
-        //
+        $data = $request->validated();
+
+        try {
+            $update = [
+                'nama' => $data['nama'],
+                'sku' => $data['sku'],
+                'deskripsi' => $data['deskripsi'],
+                'id_kategori' => $data['kategori'],
+                'harga' => unformat_rupiah($data['harga'] ?? 0),
+                'berat' => unformat_rupiah($data['berat'] ?? 0),
+                'ukuran' => collect($data['ukuran'])->map(fn ($ukuran)  =>  unformat_rupiah($ukuran)),
+            ];
+            $produk->update($update);
+            return redirect()->route('produk.index')->with('success', 'Data berhasil disimpan');
+        } catch (Exception $e) {
+            return redirect()->route('produk.index')->with('error', 'Error : ' . $e->getMessage());
+        }
     }
 
     /**
