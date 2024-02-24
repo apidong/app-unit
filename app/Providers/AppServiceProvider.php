@@ -5,6 +5,7 @@ namespace App\Providers;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Database\Events\QueryExecuted;
 
 class AppServiceProvider extends ServiceProvider
@@ -27,6 +28,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->bootLogQuery();
+        $this->bootCustomValidator();
     }
 
     protected function bootLogQuery()
@@ -43,5 +45,10 @@ class AppServiceProvider extends ServiceProvider
                 $this->app->log->debug(Str::replaceArray('?', $bindings->toArray(), $query->sql));
             });
         }
+    }
+
+    protected function bootCustomValidator()
+    {
+         
     }
 }

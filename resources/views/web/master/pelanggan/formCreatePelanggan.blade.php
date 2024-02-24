@@ -4,9 +4,9 @@
 
 @section('content_header')
     <h1 class="m-0 text-dark">
-        Alamat
+        Pelanggan
         <small class="font-weight-light ml-1 text-md">
-            Tambah Alamat 
+            Tambah Pelanggan
         </small>
     </h1>
 @endsection
@@ -20,14 +20,14 @@
                 <div class="card-header">
                     <div class="float-left">
                         <div class="btn-group">
-                            <a href="<?= url('master/alamat') ?>" class="btn btn-sm btn-block btn-secondary"><i
+                            <a href="<?= url('master/pelanggan') ?>" class="btn btn-sm btn-block btn-secondary"><i
                                     class="fas fa-arrow-left"></i>
                             </a>
                         </div>
                     </div>
                 </div>
                 <div class="card-body">
-                    <form action="<?= url('master/alamat') ?>" method="post" enctype="multipart/form-data"
+                    <form action="<?= url('master/pelanggan') ?>" method="post" enctype="multipart/form-data"
                         class="form-horizontal">
                         @csrf
 
@@ -50,11 +50,30 @@
                             </div>
                         </div>
 
+                        <div class="form-group row">
+                            <label class="col-sm-2 col-form-label">Nomor Telepon</label>
+                            <div class="col-sm-8">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fas fa-tags"></i></span>
+                                    </div>
+                                    <input type="text" name="nomor_telepon"
+                                        class="form-control @error('nomor_telepon') is-invalid @enderror"
+                                        value="{{ old('nomor_telepon') }}" placeholder="0852313750001" autocomplete="off">
+                                    @error('nomor_telepon')
+                                        <div class="invalid-feedback">
+                                            <h6>{{ $message }}</h6>
+                                        </div>
+                                    @enderror
+                                </div>
+                            </div>
+                        </div>
+
                         <div class="form-group row ">
                             <label class="col-sm-2 col-form-label">Provinsi</label>
                             <div class="col-sm-8">
-                                <select class="form-control-sm @error('nama_prov') is-invalid @enderror" id="provinsi" data-placeholder="Pilih Provinsi"
-                                    name="nama_prov" style="width: 100%;">
+                                <select class="form-control-sm @error('nama_prov') is-invalid @enderror" id="provinsi"
+                                    data-placeholder="Pilih Provinsi" name="nama_prov" style="width: 100%;">
                                 </select>
                                 @error('nama_prov')
                                     <h6 class="text-danger mt-3 text-error">
@@ -67,8 +86,8 @@
                         <div class="form-group row ">
                             <label class="col-sm-2 col-form-label">Kabupaten</label>
                             <div class="col-sm-8">
-                                <select class="form-control-sm @error('nama_kab') is-invalid @enderror" id="kabupaten" disabled data-placeholder="Pilih Kabupaten"
-                                    name="nama_kab" style="width: 100%;">
+                                <select class="form-control-sm @error('nama_kab') is-invalid @enderror" id="kabupaten"
+                                    disabled data-placeholder="Pilih Kabupaten" name="nama_kab" style="width: 100%;">
                                 </select>
 
                                 @error('nama_kab')
@@ -81,9 +100,10 @@
 
                         <div class="form-group row ">
                             <label class="col-sm-2 col-form-label">Kecamatan</label>
-                            <div class="col-sm-8"> 
-                                <select class="form-control-sm @error('nama_kec') is-invalid @enderror" name="nama_kec" id="kecamatan" disabled name="nama_kec"
-                                    data-placeholder="Pilih Kecamatan" style="width: 100%;">
+                            <div class="col-sm-8">
+                                <select class="form-control-sm @error('nama_kec') is-invalid @enderror" name="nama_kec"
+                                    id="kecamatan" disabled name="nama_kec" data-placeholder="Pilih Kecamatan"
+                                    style="width: 100%;">
                                 </select>
 
                                 @error('nama_kec')

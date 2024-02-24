@@ -28,7 +28,7 @@ class UpdateAlamatRequest extends FormRequest
             'nama_prov' => 'required|string',
             'nama_kab' => 'required|string',
             'nama_kec' => 'required|string',
-            'kode_pos' => 'required|numeric',
+            'kode_pos' => 'required|regex:/^[0-9]+$/|size:5',
             'alamat' => 'required|string',
             'lainnya' => 'sometimes',
             'latitude' => 'required|numeric',

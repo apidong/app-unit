@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreAlamatRequest extends FormRequest
+class StorePelangganRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,6 +25,7 @@ class StoreAlamatRequest extends FormRequest
     {
         return [
             'nama' => 'required|string',
+            'nomor_telepon' => 'required|regex:/^[0-9]+$/|min:6',
             'nama_prov' => 'required|string',
             'nama_kab' => 'required|string',
             'nama_kec' => 'required|string',
@@ -35,4 +36,6 @@ class StoreAlamatRequest extends FormRequest
             'longitude' => 'required|numeric'
         ];
     }
+
+   
 }

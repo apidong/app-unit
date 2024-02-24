@@ -2,15 +2,15 @@
 
 namespace App\Http\Controllers\Web\Master;
 
-use App\Models\Alamat;
+use Exception;
+use App\Models\Wilayah;
+use App\Models\Pelanggan;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreAlamatRequest;
-use App\Http\Requests\UpdateAlamatRequest;
-use App\Models\Wilayah;
-use Exception;
+use App\Http\Requests\StorePelangganRequest;
+use App\Http\Requests\UpdatePelangganRequest;
 
-class AlamatController extends Controller
+class PelangganController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -20,12 +20,12 @@ class AlamatController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            return datatables(Alamat::query())
+            return datatables(Pelanggan::query())
                 ->addIndexColumn()
                 ->make(true);
         }
 
-        return view('web.master.alamat.index');
+        return view('web.master.pelanggan.index');
     }
 
     /**
@@ -35,16 +35,16 @@ class AlamatController extends Controller
      */
     public function create()
     {
-        return view('web.master.alamat.formCreateAlamat');
+        return view('web.master.pelanggan.formCreatePelanggan');
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\StorePelangganRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreAlamatRequest $request)
+    public function store(StorePelangganRequest $request)
     {
         $data = $request->validated();
 
@@ -58,6 +58,7 @@ class AlamatController extends Controller
 
             $create = [
                 'nama' => $data['nama'],
+                'nomor_telepon' => $data['nomor_telepone'],
                 'nama_prov' => $wilayah->nama_prov,
                 'nama_kab' => $wilayah->nama_kab,
                 'nama_kec' => $wilayah->nama_kec,
@@ -68,20 +69,20 @@ class AlamatController extends Controller
                 'region' => ['latitude' => $data['latitude'], 'longitude' => $data['longitude']],
             ];
 
-            Alamat::create($create);
-            return redirect()->route('alamat.index')->with('success', 'Data berhasil disimpan');
+            Pelanggan::create($create);
+            return redirect()->route('pelanggan.index')->with('success', 'Data berhasil disimpan');
         } catch (Exception $e) {
-            return redirect()->route('alamat.create')->with('error', 'Error : ' . $e->getMessage());
+            return redirect()->route('pelanggan.create')->with('error', 'Error : ' . $e->getMessage());
         }
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Alamat  $alamat
+     * @param  \App\Models\Pelanggan  $pelanggan
      * @return \Illuminate\Http\Response
      */
-    public function show(Alamat $alamat)
+    public function show(Pelanggan $pelanggan)
     {
         //
     }
@@ -89,22 +90,22 @@ class AlamatController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Alamat  $alamat
+     * @param  \App\Models\Pelanggan  $pelanggan
      * @return \Illuminate\Http\Response
      */
-    public function edit(Alamat $alamat)
+    public function edit(Pelanggan $pelanggan)
     {
-        return view('web.master.alamat.formUpdateAlamat', compact('alamat'));
+        return view('web.master.pelanggan.formUpdatePelanggan', compact('pelanggan'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Alamat  $alamat
+     * @param  \App\Http\Requests\UpdatePelangganRequest  $request
+     * @param  \App\Models\Pelanggan  $pelanggan
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateAlamatRequest $request, Alamat $alamat)
+    public function update(UpdatePelangganRequest $request, Pelanggan $pelanggan)
     {
         $data = $request->validated();
 
@@ -117,6 +118,7 @@ class AlamatController extends Controller
 
             $update = [
                 'nama' => $data['nama'],
+                'nomor_telepon' => $data['nomor_telepon'],
                 'nama_prov' => $wilayah->nama_prov,
                 'nama_kab' => $wilayah->nama_kab,
                 'nama_kec' => $wilayah->nama_kec,
@@ -127,21 +129,20 @@ class AlamatController extends Controller
                 'region' => ['latitude' => $data['latitude'], 'longitude' => $data['longitude']],
             ];
 
-            $alamat->update($update);
-            return redirect()->route('alamat.index')->with('success', 'Data berhasil disimpan');
+            $pelanggan->update($update);
+            return redirect()->route('pelanggan.index')->with('success', 'Data berhasil disimpan');
         } catch (Exception $e) {
-            return redirect()->route('alamat.index')->with('error', 'Error : ' . $e->getMessage());
+            return redirect()->route('pelanggan.index')->with('error', 'Error : ' . $e->getMessage());
         }
-         
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Alamat  $alamat
+     * @param  \App\Models\Pelanggan  $pelanggan
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Alamat $alamat)
+    public function destroy(Pelanggan $pelanggan)
     {
         //
     }
