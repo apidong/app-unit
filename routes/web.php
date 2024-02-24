@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Web\Home\HomeController;
 use App\Http\Controllers\Web\Auth\LoginController;
+use App\Http\Controllers\Web\Master\AlamatController;
 use App\Http\Controllers\Web\Master\KategoriController;
 use App\Http\Controllers\Web\Master\ProdukController;
 use App\Http\Controllers\Web\Pengaturan\UserController;
@@ -38,6 +39,7 @@ Route::middleware('auth')->group(function () {
     Route::prefix('master')->group(function () {
         Route::resource('produk', ProdukController::class);
         Route::resource('kategori', KategoriController::class);
+        Route::resource('alamat', AlamatController::class);
     });
 
     Route::prefix('pengaturan')->group(function () {
