@@ -25,7 +25,7 @@
                 <!-- /.card-header -->
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table id="table-user" class="table table-hover va-middle">
+                        <table id="table-alamat" class="table table-hover va-middle">
                             <thead>
                                 <tr>
 
@@ -49,98 +49,57 @@
 @section('js')
     <script>
         $(function() {
-            const host = "{{ url('data/list_wilayah/') }}";
+            $('#table-alamat').DataTable({
+                processing: true,
+                serverSide: true,
+                autoWidth: false,
+                ajax: {
+                    url: '{{ url('master/alamat') }}',
+                    method: 'get'
+                },
 
-            function list_kabupaten() {
-                $('#list_kabupaten').select2({
-                    ajax: {
-                        url: host + '?kode=' + $('#list_provinsi').val(),
-                        dataType: 'json',
-                        delay: 400,
-                        data: function(params) {
-                            return {
-                                cari: params.term,
-                                page: params.page || 1,
-                            };
-                        },
-                        processResults: function(response, params) {
-                            params.page = params.page || 1;
+                columnDefs: [{
+                    orderable: false,
+                    targets: [0, 1]
+                }],
+                columns: [{
+                        'searchable': false,
+                        "orderable": false,
+                        "data": function(data) {
+                            return `
+                        <td class="text-left p-1 align-middle">
+                                 <div class="row">
+                                    <div class="col-12 font-weight-bold">
+                                        ${data.nama}
+                                        </div>
 
-                            return {
-                                results: $.map(response.results, function(item) {
-                                    return {
-                                        id: item.kode_kab,
-                                        text: item.nama_kab,
-                                    }
-                                }),
-                                pagination: response.pagination
-                            };
-                        },
-                        cache: true
-                    }
-                });
-            }
+                                        <div class="col-12 font-italic">
+                                            ${data.alamat}  - ${data.lainnya} 
+                                        </div>
 
-            function list_kecamatan() {
-                $('#list_kecamatan').select2({
-                    ajax: {
-                        url: host + '?kode=' + $('#list_kabupaten')
-                            .val(),
-                        dataType: 'json',
-                        delay: 400,
-                        data: function(params) {
-                            return {
-                                cari: params.term,
-                                page: params.page || 1,
-                            };
-                        },
-                        processResults: function(response, params) {
-                            params.page = params.page || 1;
+                                        <div class="col-12  ">
+                                        ${data.nama_kec}, ${data.nama_kab}, ${data.nama_prov}, ${data.kode_pos}
+                                        </div>
+                                    </div>
+                        </td>`
+                        }
+                    },
 
-                            return {
-                                results: $.map(response.results, function(item) {
-                                    return {
-                                        id: item.kode_kec,
-                                        text: item.nama_kec
-                                    }
-                                }),
-                                pagination: response.pagination
-                            };
-                        },
-                        cache: true
-                    }
-                });
-            }
 
-            function list_desa() {
-                $('#list_desa').select2({
-                    ajax: {
-                        url: host + '?kode=' + $('#list_kecamatan').val(),
-                        dataType: 'json',
-                        delay: 400,
-                        data: function(params) {
-                            return {
-                                cari: params.term,
-                                page: params.page || 1,
-                            };
-                        },
-                        processResults: function(response, params) {
-                            params.page = params.page || 1;
+                    {
+                        'searchable': false,
+                        "data": function(data) {
+                            return `<td class="text-right py-0 align-middle">
+                                <div class="btn-group btn-group-sm">
+                                    <a class="btn btn-primary btn-edit" href="{{ url('master/alamat') }}/${data.id}/edit"><i class="fas fa-pencil-alt"></i></a>
+                                    <button data-href="{{ url('master/alamat') }}/${data.id}" class="btn btn-danger" data-toggle="modal" data-target="#confirm-delete"><i class="fas fa-trash"></i></button>
+                                </div>
+                            </td>`
+                        }
+                    },
 
-                            return {
-                                results: $.map(response.results, function(item) {
-                                    return {
-                                        id: item.kode_kec,
-                                        text: item.nama_kec
-                                    }
-                                }),
-                                pagination: response.pagination
-                            };
-                        },
-                        cache: true
-                    }
-                });
-            }
+                ]
+            });
         });
     </script>
 @endsection

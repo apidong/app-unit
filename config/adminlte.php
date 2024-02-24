@@ -449,6 +449,22 @@ return [
             ],
         ],
 
+        'leaflet' => [
+            'active' => true,
+            'files' => [
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => '/assets/plugins/leaflet/leaflet.js',
+                ],
+                [
+                    'type' => 'css',
+                    'asset' => false,
+                    'location' => '/assets/plugins/leaflet/leaflet.css',
+                ],
+            ],
+        ],
+
         // Pastikan ini selalu dibagian paling bawah
         'custom' => [
             'active' => true,

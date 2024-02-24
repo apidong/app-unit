@@ -20,8 +20,7 @@ return new class extends Migration
             $table->string('nama_prov', 100);
             $table->string('nama_kab', 100);
             $table->string('nama_kec', 100);
-            $table->string('nama_desa', 100);
-            $table->string('kode_desa', 50);
+            $table->string('kode_kec', 50);
             $table->string('kode_pos', 50);
             $table->text('alamat');
             $table->text('lainnya')->nullable();
@@ -34,7 +33,7 @@ return new class extends Migration
             $table->index('nama_prov');
             $table->index('nama_kab');
             $table->index('nama_kec');
-            $table->index('nama_desa');
+            $table->index('kode_kec');
             $table->index('kode_pos');
         });
     }
