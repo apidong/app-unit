@@ -11,7 +11,8 @@ use App\Http\Controllers\Web\Pengaturan\UserController;
 use App\Http\Controllers\Web\Master\PelangganController;
 use App\Http\Controllers\Web\Penjualan\PemesananDoController;
 use App\Http\Controllers\Web\Pengaturan\PengaturanAplikasiController;
- 
+use App\Http\Controllers\Web\Penjualan\ExpedisiController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -40,7 +41,6 @@ Route::middleware('auth')->group(function () {
     });
 
     Route::prefix('master')->group(function () {
-         
         Route::resource('produk', ProdukController::class);
         Route::resource('kategori', KategoriController::class);
         Route::resource('alamat', AlamatController::class);
@@ -49,6 +49,7 @@ Route::middleware('auth')->group(function () {
 
     Route::prefix('penjualan')->group(function () {
         Route::resource('do', PemesananDoController::class);
+        Route::post('getRate', [ExpedisiController::class, 'getRates']);
     });
 
     Route::prefix('data')->group(function () {

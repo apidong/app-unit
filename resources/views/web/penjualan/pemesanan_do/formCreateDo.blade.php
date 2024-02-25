@@ -131,21 +131,22 @@
                 <div class="card card-outline card-info">
                     <div class="card-header">
                         <div class="float-left">
-                            Form Pengiriman
+                            Form Alamat Saya
                         </div>
                     </div>
                     <div class="card-body">
                         <div class="row">
                             <div class="col-12">
                                 <div class="form-group row">
-                                    <label class=" mr-5 col-form-label  text-primary"><i class="fas fa-map-marker-alt"></i>
-                                        Alamat Pengiriman</label> <button type="button" class="btn btn-info" data-toggle="modal"
+                                    <label class=" ml-3 mr-3 col-form-label  text-primary"><i
+                                            class="fas fa-map-marker-alt"></i>
+                                        Dikirim Dari</label> <button type="button" class="btn btn-info" data-toggle="modal"
                                         data-target="#modal-alamat">Pilih alamat</button>
                                 </div>
 
 
                                 <table class="table table-borderless" id="alamat-pilih">
-                                    
+
                                 </table>
 
 
@@ -168,57 +169,29 @@
                         <div class="row">
                             <div class="col-12">
                                 <div class="form-group row">
-                                    <label class=" col-sm-4 col-form-label  text-primary"><i
-                                            class="fas fa-map-marker-alt"></i> Alamat Pengiriman</label>
+                                    <label class=" ml-3 mr-3 col-form-label  text-primary"><i
+                                            class="fas fa-map-marker-alt"></i> Dikirim ke</label> <button type="button"
+                                        class="btn btn-info" data-toggle="modal" data-target="#modal-pelanggan">Pilih
+                                        Pelanggan</button>
                                 </div>
+                                <table class="table table-borderless" id="pelanggan-pilih">
 
-
-                                <table class="table table-borderless">
-                                    <tbody>
-                                        <tr>
-                                            <td width="250" class="align-middle ">
-                                                <label class="text-weight-bold">Tazela</label>
-                                            </td>
-                                            <td class="align-middle" rowspan="2">dsfsdfds</td>
-                                            <td width="100" class="align-middle text-center" rowspan="2">
-                                                <span class="text-primary" data-toggle="modal"
-                                                    data-target="#modal-pengiriman">Ubah</span>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td width="250" class="align-middle ">
-                                                <label class="text-weight-bold">Tazela</label>
-
-                                            </td>
-
-                                        </tr>
-                                    </tbody>
                                 </table>
+                            </div>
+                        </div>
 
-
-
-                                <div class="col-md-6  col-sm-12">
-                                    <div class="form-group row">
-                                        <label class="col-sm-4 col-form-label text-right">Detail Lainnya</label>
-                                        <div class=" col-sm-8">
-                                            <div class="input-group">
-                                                <div class="input-group-prepend">
-                                                    <span class="input-group-text"><i class="fas fa-tags"></i></span>
-                                                </div>
-                                                <input type="text" name="lainnya"
-                                                    class="form-control @error('lainnya') is-invalid @enderror"
-                                                    value="{{ old('lainnya') }}"
-                                                    placeholder="Detail Lainnya (Cth: Blok / Unit No., Patokan)"
-                                                    autocomplete="off">
-                                                @error('lainnya')
-                                                    <div class="invalid-feedback">
-                                                        <h6>{{ $message }}</h6>
-                                                    </div>
-                                                @enderror
-                                            </div>
-                                        </div>
-                                    </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="form-group row">
+                                    <label class=" ml-3 mr-3 col-form-label  text-primary"><i
+                                            class="fas fa-dolly-flatbed"></i> Opsi Pengiriman: </label> <button
+                                        type="button" class="btn btn-info" data-toggle="modal"
+                                        data-target="#modal-pelanggan">Pilih
+                                        Pengiriman</button>
                                 </div>
+                                <table class="table table-borderless" id="pelanggan-pilih">
+
+                                </table>
                             </div>
                         </div>
                     </div>
@@ -232,7 +205,7 @@
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="ajaxModalLabel">Alamat Saya</h5>
+                    <h5 class="modal-title">Alamat Saya</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -248,6 +221,29 @@
             </div>
         </div>
     </div>
+
+    <!-- Modal pelanggan -->
+    <div class="modal fade" id="modal-pelanggan" tabindex="-1" role="dialog" aria-labelledby="ajaxModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Pelanggan</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <table class="table table-hover va-middle table-borderless table-striped" id="tabel-pelanggan">
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+                    <button type="button" class="btn btn-primary" id="btn-konfirmasi-pelanggan">Konfirmasi</button>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
 
 @push('js')
@@ -256,7 +252,7 @@
             numeral.locale('id')
             var keranjang = [];
             var alamatsaya = [];
-            var pelanggan;
+            var kirimPelanggan = [];
 
             var dataproduk = $('#table-produk').DataTable({
                 processing: true,
@@ -577,61 +573,138 @@
                 data: alamatsaya,
                 info: false,
                 columns: [{
-                        'data': 'sku',
-                    },
-                    {
-                        'data': 'nama',
-
-                    },
-                    {
-                        'searchable': false,
-                        "orderable": false,
                         'data': function(data, type, full, meta) {
-                            var number = numeral(data.harga_non_format);
-                            var tampil = number.format();
-
-                            return `<td class="text-left py-0 align-middle show-harga" data-id="${meta.row}"> ${tampil} </td>`;
-
+                            return `
+                            <label class="text-weight-bold">${data.nama}</label>
+                            `;
                         }
-
                     },
-
                     {
-                        'searchable': false,
-                        "orderable": false,
                         'data': function(data, type, full, meta) {
-                            return ` 
-                                <input class="form-control input-jumlah" value="${data.jumlah}" data-row="${meta.row}">
-                                 `
-                        },
-
-                    },
-
-                    {
-                        'searchable': false,
-                        "orderable": false,
-                        'data': function(data, type, full, meta) {
-                            var number = numeral(data.total_harga);
-                            var tampil = number.format();
-                            return `<div class="show-total" data-id="${meta.row}"> ${tampil} </div>`;
-                        }
-
-                    },
-                    {
-                        'searchable': false,
-                        "orderable": false,
-                        "data": function(data, type, full, meta) {
-
-                            return `<td class="text-right py-0 align-middle">
-                            <div class="btn-group btn-group-sm">
-                                <button type="button" class="btn btn-danger hapus-keranjang" data-row="${meta.row}"><i class="fas fa-minus"></i></button>
+                            return `
+                            <div class="row">
+                                <div class="col-12">${data.alamat}</div>
+                                <div class="col-12 text-weight-light">${data.nama_kec} ${data.nama_kab} ${data.nama_prov}</div>
+                                <div class="col-12 text-weight-light">Kode Pos : ${data.kode_pos}</div>
                             </div>
-                        </td>`
+                            `;
                         }
+
                     },
+
 
                 ]
             });
+
+            // kumpulan perintah untuk pelanggan
+            var tabelPelanggan = $('#tabel-pelanggan').DataTable({
+                processing: true,
+                serverSide: true,
+                autoWidth: false,
+                lengthChange: false,
+                info: false,
+                searching: false,
+                ajax: {
+                    url: '{{ url('master/pelanggan') }}',
+                    method: 'get',
+                },
+                columnDefs: [{
+                        orderable: false,
+                        targets: '_all'
+                    } // Disable ordering for all columns
+                ],
+
+
+                columns: [{
+                        'orderable': false,
+                        'width': '30px',
+                        'render': function(data, type, full, meta) {
+                            return `
+                            <input class="form-check-input" type="radio" name="radioalamat" value="${meta.row}">`
+                        }
+                    },
+                    {
+                        'orderable': false,
+                        'data': function(data, type, full, meta) {
+                            return `
+                            <div class="row">
+                                <div class="col-12 font-weight-bold">${data.nama}</div>
+                                 
+                                <div class="col-12 ">${data.alamat}</div>
+                                <div class="col-12 font-weight-light">${data.nama_prov.toUpperCase()}. ${data.nama_kab.toUpperCase()}. ${data.nama_kec.toUpperCase()}</div>
+                                <div class="col-12 font-weight-light">Kode Pos : ${data.kode_pos} </div>
+                            </div>
+                            `
+                        },
+                    },
+
+                ],
+                createdRow: function(row, data, dataIndex) {
+                    // Add custom classes to columns as needed
+                    $(row).find('td:eq(0)').addClass('text-center');
+
+                }
+            });
+
+            $('#modal-pelanggan').on('show.bs.modal', function(event) {
+                tabelPelanggan.ajax.reload();
+            });
+
+            $('#tabel-pelanggan').on('click', 'tr', function() {
+                var row = tabelPelanggan.row(this);
+
+                $(this).find('input').prop('checked', true);
+                var rowData = row.data();
+                alamatsaya = rowData;
+
+            });
+
+            $('#btn-konfirmasi-pelanggan').click(function(e) {
+
+                var selectedAlamat = $('#tabel-pelanggan').find('input:checked')
+                var row = tabelAlamat.row(selectedAlamat.val());
+                var rowData = row.data();
+
+                kirimPelanggan = [rowData];
+                $('#modal-pelanggan').modal('hide');
+                tabel_pelanggan_pilih.clear();
+                tabel_pelanggan_pilih.rows.add(kirimPelanggan);
+
+                tabel_pelanggan_pilih.draw();
+            });
+
+            var tabel_pelanggan_pilih = $('#pelanggan-pilih').DataTable({
+                paging: false,
+                autoWidth: false,
+                lengthChange: false,
+                searching: false,
+                data: kirimPelanggan,
+                info: false,
+                columns: [{
+                        'data': function(data, type, full, meta) {
+                            return `
+                            <label class="text-weight-bold">${data.nama}</label>
+                            `;
+                        }
+                    },
+                    {
+                        'data': function(data, type, full, meta) {
+                            return `
+                            <div class="row">
+                                <div class="col-12">${data.alamat}</div>
+                                <div class="col-12 text-weight-light">${data.nama_kec} ${data.nama_kab} ${data.nama_prov}</div>
+                                <div class="col-12 text-weight-light">Kode Pos : ${data.kode_pos}</div>
+                            </div>
+                            `;
+                        }
+
+                    },
+
+
+                ]
+            });
+
+            
 
         })
     </script>
