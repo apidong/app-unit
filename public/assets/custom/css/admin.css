@@ -3,3 +3,16 @@
 .select2-container .select2-selection--single {
     height: 38px;
 }
+
+table.table-borderless thead .sorting_asc:before,
+table.table-borderless thead .sorting_desc:after {
+    opacity: 0;
+}
+
+table.table-borderless thead .sorting:after,
+table.table-borderless thead .sorting_asc:after,
+table.table-borderless thead .sorting_desc:after,
+table.table-borderless thead .sorting_asc_disabled:after,
+table.table-borderless thead .sorting_desc_disabled:after {
+    opacity: 0;
+}

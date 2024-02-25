@@ -1,16 +1,17 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
+ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Web\Home\HomeController;
 use App\Http\Controllers\Web\Auth\LoginController;
 use App\Http\Controllers\Web\Data\WilayahController;
 use App\Http\Controllers\Web\Master\AlamatController;
 use App\Http\Controllers\Web\Master\ProdukController;
 use App\Http\Controllers\Web\Master\KategoriController;
-use App\Http\Controllers\Web\Master\PelangganController;
 use App\Http\Controllers\Web\Pengaturan\UserController;
+use App\Http\Controllers\Web\Master\PelangganController;
+use App\Http\Controllers\Web\Penjualan\PemesananDoController;
 use App\Http\Controllers\Web\Pengaturan\PengaturanAplikasiController;
-
+ 
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -39,15 +40,19 @@ Route::middleware('auth')->group(function () {
     });
 
     Route::prefix('master')->group(function () {
+         
         Route::resource('produk', ProdukController::class);
         Route::resource('kategori', KategoriController::class);
         Route::resource('alamat', AlamatController::class);
         Route::resource('pelanggan', PelangganController::class);
     });
 
+    Route::prefix('penjualan')->group(function () {
+        Route::resource('do', PemesananDoController::class);
+    });
+
     Route::prefix('data')->group(function () {
         Route::get('list_wilayah', [WilayahController::class, 'listWilayah']);
-       
     });
 
     Route::prefix('pengaturan')->group(function () {

@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers\Web\Master;
 
+use Exception;
 use App\Models\Produk;
+use App\Models\Kategori;
+use Illuminate\Support\Str;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreProdukRequest;
 use App\Http\Requests\UpdateProdukRequest;
-use App\Models\Kategori;
-use Exception;
-use Illuminate\Http\Request;
 
 class ProdukController extends Controller
 {
@@ -25,6 +26,9 @@ class ProdukController extends Controller
                 ->addColumn('harga', function ($data) {
                     // Process data for the custom column before sending it
                     return 'Rp ' . rupiah($data->harga);
+                })
+                ->addColumn('harga_non_format', function ($data) {
+                    return  $data->harga;
                 })
                 ->make(true);
         }
@@ -130,5 +134,17 @@ class ProdukController extends Controller
     public function destroy(Produk $produk)
     {
         //
+    }
+
+    function cari(Request $request)
+    {
+        $cari = Str::of($request->search)->strip_tags();
+        try {
+            $results = Produk::where('nama', 'like', '%' . $cari . '%')
+                ->orWhere('column_name', 'like', '%' . $cari . '%')->get();
+            $this->sendResponse($results, 'success');
+        } catch (Exception $e) {
+            $this->sendError($e->getMessage());
+        }
     }
 }

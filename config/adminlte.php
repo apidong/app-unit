@@ -465,6 +465,30 @@ return [
             ],
         ],
 
+        'numeral' => [
+            'active' => true,
+            'files' => [
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => '/assets/plugins/numeral/numeral.min.js',
+                ],
+                 
+            ],
+        ],
+
+        'lodash' => [
+            'active' => true,
+            'files' => [
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => '/assets/plugins/lodash/lodash.min.js',
+                ],
+                 
+            ],
+        ],
+
         // Pastikan ini selalu dibagian paling bawah
         'custom' => [
             'active' => true,

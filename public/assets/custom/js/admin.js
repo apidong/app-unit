@@ -54,3 +54,23 @@ $(function () {
     //     startDate: new Date(),
     // });
 });
+
+numeral.register('locale', 'id', {
+    delimiters: {
+        thousands: '.',
+        decimal: ','
+    },
+    abbreviations: {
+        thousand: 'k',
+        million: 'm',
+        billion: 'b',
+        trillion: 't'
+    },
+    ordinal: function (number) {
+        return number;
+    },
+
+    currency: {
+        symbol: 'Rp.'
+    }
+});
