@@ -18,11 +18,12 @@ return new class extends Migration
             $table->unsignedBigInteger('id_pemesanan_do');
             $table->unsignedBigInteger('id_produk');
             $table->string('nama_produk', 150);
-            $table->text('deskripsi_produk');
-            $table->decimal('harga_produk');
-            $table->decimal('berat_produk');
-            $table->text('ukuran');
-            $table->decimal('jumlah');
+            $table->string('sku', 100)->nullable();
+            $table->text('deskripsi_produk')->nullable();
+            $table->decimal('harga_produk', 20, 0);
+            $table->decimal('berat_produk', 20, 0);
+            $table->text('ukuran')->nullable();
+            $table->decimal('jumlah', 20, 0);
             $table->timestamps();
 
             $table->index('id_produk');

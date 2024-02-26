@@ -16,23 +16,23 @@ return new class extends Migration
         Schema::create('pemesanan_do', function (Blueprint $table) {
             $table->id();
             $table->string('nomor_do', 50)->notNullable();
-            $table->string('nama_pengirim', 100)->notNullable();
-            $table->json('koordinat_pengirim')->notNullable();
-            $table->string('kode_pos_pengirim', 50)->notNullable();
-            $table->string('nama_penerima', 100)->notNullable();
-            $table->text('alamat_penerima')->notNullable();
-            $table->string('kode_pos_penerima', 50)->notNullable();
-            $table->json('koordinat_penerima')->notNullable();
-            $table->decimal('harga_total')->notNullable();
-            $table->decimal('ongkos_kirim')->notNullable();
-            $table->string('ekspedisi', 100)->notNullable();
-            $table->string('tipe', 20)->notNullable();
-            $table->enum('status', ['draft', 'siap', 'menunggu', 'tolak', 'revisi', 'setuju'])->notNullable();
-            $table->enum('kirim', ['pending', 'dikirim', 'selesai'])->notNullable(); // Add actual values for 'kirim'
-            $table->unsignedBigInteger('id_pembuat')->notNullable();
-            $table->unsignedBigInteger('id_pelanggan')->notNullable();
-            $table->unsignedBigInteger('id_alamat')->notNullable();
-            $table->text('keterangan')->notNullable();
+            $table->string('nama_pengirim', 100)->nullable();
+            $table->json('koordinat_pengirim')->nullable();
+            $table->string('kode_pos_pengirim', 50)->nullable();
+            $table->string('nama_penerima', 100)->nullable();
+            $table->text('alamat_penerima')->nullable();
+            $table->string('kode_pos_penerima', 50)->nullable();
+            $table->json('koordinat_penerima')->nullable();
+            $table->decimal('harga_total')->nullable();
+            $table->decimal('ongkos_kirim')->nullable();
+            $table->string('ekspedisi', 100)->nullable();
+            $table->string('tipe', 70)->nullable();
+            $table->enum('status', ['draft', 'siap', 'menunggu', 'tolak', 'revisi', 'setuju'])->nullable();
+            $table->enum('kirim', ['pending', 'dikirim', 'selesai'])->nullable(); // Add actual nullable()'kirim'
+            $table->unsignedBigInteger('id_pembuat')->nullable();
+            $table->unsignedBigInteger('id_pelanggan')->nullable();
+            $table->unsignedBigInteger('id_alamat')->nullable();
+            $table->text('keterangan')->nullable();
             $table->timestamps();
 
             $table->foreign('id_pelanggan')->references('id')->on('pelanggan');

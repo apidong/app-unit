@@ -48,8 +48,10 @@ Route::middleware('auth')->group(function () {
     });
 
     Route::prefix('penjualan')->group(function () {
+        Route::post('do/ajukan', [PemesananDoController::class, 'ajukan']);
+        Route::post('do/{id}/update', [PemesananDoController::class, 'update']);
         Route::resource('do', PemesananDoController::class);
-        Route::post('getRate', [ExpedisiController::class, 'getRates']);
+        Route::post('getrate', [ExpedisiController::class, 'getRates']);
     });
 
     Route::prefix('data')->group(function () {

@@ -58,7 +58,7 @@ class PelangganController extends Controller
 
             $create = [
                 'nama' => $data['nama'],
-                'nomor_telepon' => $data['nomor_telepone'],
+                'nomor_telepon' => $data['nomor_telepon'],
                 'nama_prov' => $wilayah->nama_prov,
                 'nama_kab' => $wilayah->nama_kab,
                 'nama_kec' => $wilayah->nama_kec,

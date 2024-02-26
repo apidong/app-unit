@@ -181,11 +181,10 @@
                         <hr>
                         <div class="col-12">
                             <div class="btn-group mr-2" role="group" aria-label="Second group">
-                                <a class="btn btn-sm btn-block btn-warning" href="{{ url('penjualan/do') }}"> 
-                                    <i class="fas fa-arrow-circle-left"></i>  Kembali 
+                                <a class="btn btn-sm btn-block btn-warning" href="{{ url('penjualan/do') }}">
+                                    <i class="fas fa-arrow-circle-left"></i> Kembali
                                 </a>
                             </div>
-
                             <div class="btn-group mr-2" role="group" aria-label="First group">
                                 <button type="button" id="draft" class="btn btn-sm btn-block btn-success">
                                     Simpan Sebagai Draft <i class="fas fa-save"></i>
@@ -196,6 +195,8 @@
                                     Ajukan Persetujuan <i class="fas fa-arrow-circle-right"></i>
                                 </button>
                             </div>
+
+
                         </div>
                     </div>
                 </div>
@@ -220,6 +221,7 @@
                 <div class="modal-body">
                     <table class="table table-hover va-middle table-borderless table-striped" id="tabel-alamat">
                     </table>
+
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
@@ -283,23 +285,24 @@
     <script>
         $(function() {
             numeral.locale('id')
-            var keranjang = [];
-            var alamatsaya = [];
-            var kirimPelanggan = [];
+            var keranjang = {!! $items !!};
+            var alamatsaya = [{!! $alamat !!}];
+            var kirimPelanggan = [{!! $pelanggan !!}];
             var daftarkurir = [];
-            var kurir = [];
+            var kurir = [{!! $kurir !!}];
 
             // ajukan draft
             $('#draft').click(function(e) {
                 e.preventDefault();
                 $.ajax({
                     type: "post",
-                    url: '{{ url('penjualan/do') }}',
+                    url: '{{ url("penjualan/do/${id}/update") }}',
                     data: {
                         item: keranjang,
                         alamat: alamatsaya[0] ?? null,
                         pelanggan: kirimPelanggan[0] ?? null,
-                        kurir: kurir[0] ?? null
+                        kurir: kurir[0] ?? null,
+                        id: {{ $id }}
                     },
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
@@ -323,7 +326,7 @@
                             type: 'success',
                         });
                         window.location.href =
-                            `{{ url('penjualan/do') }}/${response.data.id}/edit`
+                            `{{ url('penjualan/do') }}/{{ $id }}/edit`
 
                     },
 
@@ -350,7 +353,8 @@
                         item: keranjang,
                         alamat: alamatsaya[0] ?? null,
                         pelanggan: kirimPelanggan[0] ?? null,
-                        kurir: kurir[0] ?? null
+                        kurir: kurir[0] ?? null,
+                        id : {{ $id }}
                     },
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
@@ -368,7 +372,7 @@
                         });
                     },
                     success: function(response) {
-                       
+
                         Swal.fire({
                             title: 'Success!',
                             type: 'success',
@@ -391,7 +395,6 @@
                     }
                 });
             });
-
 
             var dataproduk = $('#table-produk').DataTable({
                 processing: true,
@@ -941,19 +944,7 @@
 
             });
 
-            $('#btn-konfirmasi-pengiriman').click(function(e) {
 
-                var selectedkurir = $('#tabel-pengiriman').find('input:checked')
-                var row = tabelPengiriman.row(selectedkurir.val());
-                var rowData = row.data();
-               
-                kurir = [rowData];
-                $('#modal-pengiriman').modal('hide');
-                tabel_kurir_pilih.clear();
-                tabel_kurir_pilih.rows.add(kurir);
-
-                tabel_kurir_pilih.draw();
-            });
 
             var tabel_kurir_pilih = $('#pengiriman-pilih').DataTable({
                 paging: false,
@@ -983,6 +974,21 @@
 
                     },
                 ]
+            });
+
+            $('#btn-konfirmasi-pengiriman').click(function(e) {
+
+                var selectedkurir = $('#tabel-pengiriman').find('input:checked')
+                var row = tabelPengiriman.row(selectedkurir.val());
+                var rowData = row.data();
+
+                kurir = [rowData];
+                $('#modal-pengiriman').modal('hide');
+                tabel_kurir_pilih.clear();
+                tabel_kurir_pilih.rows.add(kurir);
+                console.log(kurir)
+
+                tabel_kurir_pilih.draw();
             });
 
         })

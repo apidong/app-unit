@@ -20,7 +20,7 @@ return new class extends Migration
             $table->text('deskripsi')->nullable();
             $table->string('foto', 120)->nullable();
             $table->unsignedBigInteger('id_kategori')->nullable();
-            $table->decimal('harga', 20, 2);
+            $table->decimal('harga', 20, 0);
             $table->decimal('berat', 20, 0);
             $table->json('ukuran');
             $table->timestamps();

@@ -32,7 +32,7 @@ class PemesananDo extends Model
         'id_pelanggan',
         'id_alamat',
         'keterangan',
-
+        'kurir'
     ];
 
     protected $casts = [
@@ -43,8 +43,21 @@ class PemesananDo extends Model
 
     function scopeIdPembuat(Builder $query): Builder
     {
-        return $query->where('id_pembuat', auth()->id);
+        return $query->where('id_pembuat', auth()->user()->id);
     }
+
+    function detail()  {
+        return  $this->hasMany(DetailPemesananDo::class, 'id_pemesanan_do', 'id');
+    }
+
+    function pelanggan()  {
+        return  $this->hasOne(Pelanggan::class, 'id', 'id_pelanggan');
+    }
+
+    function alamat()  {
+        return  $this->hasOne(alamat::class, 'id', 'id_alamat');
+    }
+    
 
     /**
      * Get the user's first name.

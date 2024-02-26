@@ -22,7 +22,8 @@ class IsVerifyEmail
         if (env('local')) {
             DB::enableQueryLog();
         }
-         
+        return $next($request);
+    
         if (!Auth::guard('mobile-api')->user()->email_verified_at) {
             $response = [
                 'success' => false,
